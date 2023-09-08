@@ -1,0 +1,18 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+             "name": "Python: Current File with commandline args",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "args": [
+                "-i", "Recipies\\Active\\MayoExport\\MayoExportSample.csv",
+                "-o", "C:\\Users\\angel\\OneDrive\\Desktop\\mayoToAnyListConverter\\Recipies\\Active\\AnyListImport",
+                "-v", "DEBUG"
+            ]
+        }
+    ]
+}
