@@ -1,0 +1,31 @@
+<div itemscope itemtype="https://schema.org/Recipe">
+    <span itemprop="name">{recipieName}</span>
+    <img itemprop="image" src="{recipieImage}" />
+    <span itemprop="recipeInstructions">
+        {recipeInstructions}
+    </span>
+    <span itemprop="recipeYield">{recipeYield}</span>
+    <span itemprop="description">{recipieNotes}</span>
+
+    <div itemprop="nutrition" itemscope itemtype="https://schema.org/NutritionInformation">
+        <span itemprop="calories"> {calories}</span> <!-- Energy The number of calories.-->
+        <span itemprop="fatContent"> {fatContent}</span> <!-- Mass The number of grams of fat.-->
+        <span itemprop="saturatedFatContent"> {saturatedFatContent}</span> <!--  grams saturated fat.-->
+        <span itemprop="cholesterolContent">{cholesterolContent}</span><!-- milligrams of cholesterol.-->
+        <span itemprop="sodiumContent"> {sodiumContent}</span> <!-- Mass The number of milligrams of sodium.-->
+        <span itemprop="carbohydrateContent">{carbohydrateContent}</span><!-- Mass The number of grams of carbos.-->
+        <span itemprop="fiberContent"> {fiberContent}</span> <!-- Mass The number of grams of fiber.-->
+        <span itemprop="sugarContent"> {sugarContent}</span> <!-- Mass The number of grams of sugar.-->
+        <span itemprop="proteinContent"> {proteinContent}</span> <!-- Mass The number of grams of protein.-->
+    </div>
+
+    <!-- 
+    <ol>
+        <li itemprop="recipeIngredient">3 or 4 ripe bananas, smashed</li>
+    </ol>
+
+    <ol>
+        <li itemprop="recipeInstructions">Preheat the oven to 350 degrees.</li>
+    </ol>
+     -->
+</div>
