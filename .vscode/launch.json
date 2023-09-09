@@ -11,7 +11,8 @@
             "args": [
                 "-i", "Recipies\\Active\\MayoExport\\MayoExportSample.csv",
                 "-o", "C:\\Users\\angel\\OneDrive\\Desktop\\mayoToAnyListConverter\\Recipies\\Active\\AnyListImport",
-                "-v", "DEBUG"
+                "-v", "DEBUG",
+                "-a"
             ]
         }
     ]

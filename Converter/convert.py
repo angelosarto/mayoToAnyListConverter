@@ -57,8 +57,24 @@ def createHTML(data):
     """ 
     return output
 
-def save_file(recipie):
-    fullpath = save_root / recipie['saveFileName']
+def createIndexHTML(data):
+    tab = '\t'
+    output = f"""
+    <HTML>
+    <Head></Head>
+    <Body>
+        <ul>
+            {os.linesep.join(f'{tab*3}<li><a href="./{value["saveFileName"]}.html">{key}{tab}{value["recipieName"]}</a></li>' for key,value in mealplan.items())}
+        </ul>
+    </Body>
+    """ 
+    return output
+
+def save_file(recipie, filename = None):
+    if filename is None:
+        filename = recipie['saveFileName']
+    
+    fullpath = save_root / filename
     with open(fullpath.with_suffix(".html") , 'w')as f:
         f.write(recipie['outputHtml'])
         
@@ -85,13 +101,14 @@ if __name__ == '__main__':
     parser.add_argument('-i', '--in', type=argparse.FileType(), required=False, dest="import_file", default=None)     
     parser.add_argument('-o', '--out', type=pathlib.Path, required=False, dest="save_root")
     parser.add_argument('-v', '--verbose', type=verbose, required=False, default="WARNING")
+    parser.add_argument('-a', '--archive', default=False, action='store_true')
 
     args = parser.parse_args()
 
     import_file = args.import_file
     save_root = args.save_root
 
-    logger.debug("Args Parsed: %s %s", str(import_file), str(save_root))
+    logger.debug("Args Parsed: %s %s %s", str(import_file), str(save_root), str(args.archive))
 
     logger.debug(import_file)
     if import_file is None:
@@ -116,12 +133,21 @@ if __name__ == '__main__':
     if import_file is not None and save_root is not None:
         exportData = getExport(import_file)
     
+    if args.archive:
+        import shutil
+        dest = str(save_root)[::-1].replace("Active"[::-1], "Archive"[::-1])[::-1]
+        for file in os.listdir(save_root):
+            if file != 'index.html':
+                file_path = os.path.join(dest, file)
+                shutil.move(os.path.join(save_root,file), os.path.join(dest, file))
 
     # Time to map
         mealplan = {}
         for recipie in exportData:
 
-            mealplan[recipie['Date']+'-'+recipie['MealType']] = recipie['recipieName']
+            recipie['saveFileName'] = ''.join(c for c in str.lower(recipie['recipieName']) if c.islower())
+
+            mealplan[recipie['Date']+'-'+recipie['MealType']] = {'recipieName':recipie['recipieName'], 'saveFileName':recipie['saveFileName']}
 
             if recipie['recipieName'].startswith('Leftover'):
                 next
@@ -139,7 +165,6 @@ if __name__ == '__main__':
             recipie['fiberContent'] = "TO BE MAPPED"
             recipie['sugarContent'] = "TO BE MAPPED"
             recipie['proteinContent'] = "TO BE MAPPED"
-            recipie['saveFileName'] = ''.join(c for c in str.lower(recipie['recipieName']) if c.islower())
             
             recipie['recipeIngredients'] = re.findall('>(.+?)</li>', recipie['recipeIngredients'])
 
@@ -158,4 +183,7 @@ if __name__ == '__main__':
 
             save_file(recipie)
 
-            print(mealplan)
+    indexHTML = {}
+    indexHTML['outputHtml'] = createIndexHTML(mealplan)
+    save_file(indexHTML, "index.html")
+    print(indexHTML)
