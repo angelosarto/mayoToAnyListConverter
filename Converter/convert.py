@@ -144,7 +144,8 @@ if __name__ == '__main__':
     # Time to map
         mealplan = {}
         for recipie in exportData:
-
+            logger.debug(recipie['recipieImage'])
+            logger.debug(recipie['Date'])
             recipie['saveFileName'] = ''.join(c for c in str.lower(recipie['recipieName']) if c.islower())
 
             mealplan[recipie['Date']+'-'+recipie['MealType']] = {'recipieName':recipie['recipieName'], 'saveFileName':recipie['saveFileName']}
