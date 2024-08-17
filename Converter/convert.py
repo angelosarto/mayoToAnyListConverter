@@ -153,7 +153,7 @@ if __name__ == '__main__':
             if recipie['recipieName'].startswith('Leftover'):
                 next
 
-            recipie['recipieNamePrefix'] = "[MCD]"
+            recipie['recipieNamePrefix'] = ""
             recipie['recipieNotes'] = "Exported from mayoclinicdiet"
             recipie['recipieImage'] = re.findall(r'(https:.*)\"', recipie['recipieImage'])[0] 
             # 'NutritionInfo
